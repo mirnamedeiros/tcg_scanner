@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tcg_scanner/components/bottom-navbar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,17 +8,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Início'),
       ),
-      body: const Center(
-        child: Text(
-          'Oi!',
-          style: TextStyle(
-            fontSize: 24.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      body: BottomNavBar()
     );
   }
 }

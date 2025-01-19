@@ -80,38 +80,38 @@ class LoginForm extends StatelessWidget {
     final String username = _usernameController.text.trim();
     final String password = _passwordController.text.trim();
 
-    try {
-      // Combina o username e password no formato "username:password"
-      String credentials = '$username:$password';
-
-      // Codifica a string "username:password" em Base64
-      String base64Credentials = base64.encode(utf8.encode(credentials));
-
-      // Criando os cabeçalhos com o token de autorização básico
-      Map<String, String> headers = {
-        'Authorization': 'Basic $base64Credentials',
-        'Content-Type': 'application/json',
-      };
-
-      final response = await http.post(
-        Uri.parse('https://234b-2804-29b8-50d4-6c13-fc97-788f-d869-8842.ngrok-free.app/login'),
-        headers: headers
-      );
-
-      if (response.statusCode == 200) {
-        final token = jsonDecode(response.body)['token'];
-        await TokenManager().saveToken(token);
+    // try {
+      // // Combina o username e password no formato "username:password"
+      // String credentials = '$username:$password';
+      //
+      // // Codifica a string "username:password" em Base64
+      // String base64Credentials = base64.encode(utf8.encode(credentials));
+      //
+      // // Criando os cabeçalhos com o token de autorização básico
+      // Map<String, String> headers = {
+      //   'Authorization': 'Basic $base64Credentials',
+      //   'Content-Type': 'application/json',
+      // };
+      //
+      // final response = await http.post(
+      //   Uri.parse('https://234b-2804-29b8-50d4-6c13-fc97-788f-d869-8842.ngrok-free.app/login'),
+      //   headers: headers
+      // );
+      //
+      // if (response.statusCode == 200) {
+      //   final token = jsonDecode(response.body)['token'];
+      //   await TokenManager().saveToken(token);
 
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
         );
-      } else {
-        _showErrorDialog(context, 'Usuário ou senha inválidos.');
-      }
-    } catch (error) {
-      _showErrorDialog(context, 'Erro ao conectar ao servidor.');
-    }
+  //     } else {
+  //       _showErrorDialog(context, 'Usuário ou senha inválidos.');
+  //     }
+  //   } catch (error) {
+  //     _showErrorDialog(context, 'Erro ao conectar ao servidor.');
+  //   }
   }
 
   void _showErrorDialog(BuildContext context, String message) {
