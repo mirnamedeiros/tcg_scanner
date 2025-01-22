@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Início'),
       ),
-      body: BottomNavBar()
+      body: BottomNavBar(),
     );
   }
 }

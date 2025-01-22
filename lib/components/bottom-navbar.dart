@@ -1,13 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
 import 'package:tcg_scanner/constants.dart';
+import 'package:tcg_scanner/screens/picture-card/take-picture-screen.dart';
 
 class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int currentIndex = 0;
+
+  // Obter a câmera globalmente ou de outro lugar (neste caso, apenas um exemplo)
+  CameraDescription? camera;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeCamera();
+  }
+
+  Future<void> _initializeCamera() async {
+    try {
+      final cameras = await availableCameras();
+      setState(() {
+        camera = cameras.first;
+      });
+    } catch (e) {
+      print("Error fetching cameras: $e");
+    }
+  }
 
   setBottomBarIndex(index) {
     setState(() {
@@ -37,14 +61,32 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   Center(
                     heightFactor: 0.6,
                     child: FloatingActionButton(
-                      backgroundColor: currentIndex == 1 ? kPrimaryColor : kPrimaryLightColor,
+                      backgroundColor: currentIndex == 1
+                          ? kPrimaryColor
+                          : kPrimaryLightColor,
                       elevation: 0.1,
-                      onPressed: () {
-                        setBottomBarIndex(1); // Atualiza o índice ao clicar
+                      onPressed: () async {
+                        if (camera != null) {
+                          setBottomBarIndex(1);
+                          try {
+                            await Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    TakePictureScreen(camera: camera!),
+                              ),
+                            );
+                          } catch (e) {
+                            print(e);
+                          }
+                        } else {
+                          print("Câmera não disponível.");
+                        }
                       },
                       child: Icon(
                         Icons.photo_camera,
-                        color: currentIndex == 1 ? kPrimaryLightColor : kPrimaryColor,
+                        color: currentIndex == 1
+                            ? kPrimaryLightColor
+                            : kPrimaryColor,
                       ),
                     ),
                   ),
@@ -57,31 +99,34 @@ class _BottomNavBarState extends State<BottomNavBar> {
                         IconButton(
                           icon: Icon(
                             Icons.home,
-                            color: currentIndex == 0 ? kPrimaryColor : kPrimaryLightColor,
+                            color: currentIndex == 0
+                                ? kPrimaryColor
+                                : kPrimaryLightColor,
                           ),
                           onPressed: () {
                             setBottomBarIndex(0);
                           },
                           splashColor: Colors.white,
                         ),
-                        Container(
-                          width: size.width * 0.20,
-                        ),
+                        Container(width: size.width * 0.20),
                         IconButton(
-                            icon: Icon(
-                              Icons.folder,
-                              color: currentIndex == 2 ? kPrimaryColor : kPrimaryLightColor,
-                            ),
-                            onPressed: () {
-                              setBottomBarIndex(2);
-                            }),
+                          icon: Icon(
+                            Icons.folder,
+                            color: currentIndex == 2
+                                ? kPrimaryColor
+                                : kPrimaryLightColor,
+                          ),
+                          onPressed: () {
+                            setBottomBarIndex(2);
+                          },
+                        ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -99,9 +144,8 @@ class BNBCustomPainter extends CustomPainter {
     path.moveTo(0, 20); // Start
     path.quadraticBezierTo(size.width * 0.20, 0, size.width * 0.35, 0);
     path.quadraticBezierTo(size.width * 0.40, 0, size.width * 0.40, 20);
-    path.arcToPoint(
-        Offset(size.width * 0.60, 20), radius: Radius.circular(20.0),
-        clockwise: false);
+    path.arcToPoint(Offset(size.width * 0.60, 20),
+        radius: Radius.circular(20.0), clockwise: false);
     path.quadraticBezierTo(size.width * 0.60, 0, size.width * 0.65, 0);
     path.quadraticBezierTo(size.width * 0.80, 0, size.width, 20);
     path.lineTo(size.width, size.height);
