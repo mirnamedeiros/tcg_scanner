@@ -20,36 +20,38 @@ class LoginForm extends StatelessWidget {
     return Form(
       child: Column(
         children: [
+          // User Field
           TextFormField(
             controller: _usernameController,
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               hintText: "Usuário",
+              hintStyle: TextStyle(color: whiteColor),
               prefixIcon: Padding(
                 padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
               ),
             ),
           ),
-
           const SizedBox(height: defaultPadding),
 
+          // Password Field
           TextFormField(
             controller: _passwordController,
             textInputAction: TextInputAction.done,
             obscureText: true,
             cursorColor: kPrimaryColor,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               hintText: "Senha",
+              hintStyle: TextStyle(color: whiteColor),
               prefixIcon: Padding(
                 padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.lock),
               ),
             ),
           ),
-
           const SizedBox(height: defaultPadding),
 
           ElevatedButton(

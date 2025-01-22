@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tcg_scanner/constants.dart';
+import 'package:tcg_scanner/home/home_screen.dart';
+import 'package:tcg_scanner/screens/collection/collection_screen.dart';
 import 'package:tcg_scanner/screens/picture-card/take-picture-screen.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -103,8 +105,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
                                 ? kPrimaryColor
                                 : kPrimaryLightColor,
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             setBottomBarIndex(0);
+                            try {
+                              await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      HomeScreen(),
+                                ),
+                              );
+                            } catch (e) {
+                              print(e);
+                            }
                           },
                           splashColor: Colors.white,
                         ),
@@ -116,8 +128,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
                                 ? kPrimaryColor
                                 : kPrimaryLightColor,
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             setBottomBarIndex(2);
+                            try {
+                              await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      CollectionScreen(),
+                                ),
+                              );
+                            } catch (e) {
+                              print(e);
+                            }
                           },
                         ),
                       ],
