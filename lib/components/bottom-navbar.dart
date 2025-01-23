@@ -15,7 +15,6 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int currentIndex = 0;
 
-  // Obter a câmera globalmente ou de outro lugar (neste caso, apenas um exemplo)
   CameraDescription? camera;
 
   @override
@@ -44,109 +43,93 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Colors.white.withAlpha(55),
-      body: Stack(
+    return Container(
+      width: size.width,
+      height: 80,
+      child: Stack(
         children: [
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: Container(
-              width: size.width,
-              height: 80,
-              child: Stack(
-                children: [
-                  CustomPaint(
-                    size: Size(size.width, 80),
-                    painter: BNBCustomPainter(),
-                  ),
-                  Center(
-                    heightFactor: 0.6,
-                    child: FloatingActionButton(
-                      backgroundColor: currentIndex == 1
-                          ? kPrimaryColor
-                          : kPrimaryLightColor,
-                      elevation: 0.1,
-                      onPressed: () async {
-                        if (camera != null) {
-                          setBottomBarIndex(1);
-                          try {
-                            await Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    TakePictureScreen(camera: camera!),
-                              ),
-                            );
-                          } catch (e) {
-                            print(e);
-                          }
-                        } else {
-                          print("Câmera não disponível.");
-                        }
-                      },
-                      child: Icon(
-                        Icons.photo_camera,
-                        color: currentIndex == 1
-                            ? kPrimaryLightColor
-                            : kPrimaryColor,
+          CustomPaint(
+            size: Size(size.width, 80),
+            painter: BNBCustomPainter(),
+          ),
+          Center(
+            heightFactor: 0.6,
+            child: FloatingActionButton(
+              backgroundColor: currentIndex == 1
+                  ? kPrimaryLightColor
+                  : kPrimaryColor,
+              elevation: 0.1,
+              onPressed: () async {
+                if (camera != null) {
+                  setBottomBarIndex(1);
+                  try {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => TakePictureScreen(camera: camera!),
                       ),
-                    ),
-                  ),
-                  Container(
-                    width: size.width,
-                    height: 80,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.home,
-                            color: currentIndex == 0
-                                ? kPrimaryColor
-                                : kPrimaryLightColor,
-                          ),
-                          onPressed: () async {
-                            setBottomBarIndex(0);
-                            try {
-                              await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      HomeScreen(),
-                                ),
-                              );
-                            } catch (e) {
-                              print(e);
-                            }
-                          },
-                          splashColor: Colors.white,
-                        ),
-                        Container(width: size.width * 0.20),
-                        IconButton(
-                          icon: Icon(
-                            Icons.folder,
-                            color: currentIndex == 2
-                                ? kPrimaryColor
-                                : kPrimaryLightColor,
-                          ),
-                          onPressed: () async {
-                            setBottomBarIndex(2);
-                            try {
-                              await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      CollectionScreen(),
-                                ),
-                              );
-                            } catch (e) {
-                              print(e);
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                    );
+                  } catch (e) {
+                    print(e);
+                  }
+                } else {
+                  print("Câmera não disponível.");
+                }
+              },
+              child: Icon(
+                Icons.photo_camera,
+                color: currentIndex == 1 ?  kPrimaryColor : kPrimaryLightColor,
               ),
+            ),
+          ),
+          Container(
+            width: size.width,
+            height: 80,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.home,
+                    color: currentIndex == 0
+                        ? kPrimaryColor
+                        : kPrimaryLightColor,
+                  ),
+                  onPressed: () async {
+                    setBottomBarIndex(0);
+                    try {
+                      await Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => HomeScreen(),
+                        ),
+                      );
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
+                  splashColor: Colors.white,
+                ),
+                Container(width: size.width * 0.20),
+                IconButton(
+                  icon: Icon(
+                    Icons.folder,
+                    color: currentIndex == 2
+                        ? kPrimaryColor
+                        : kPrimaryLightColor,
+                  ),
+                  onPressed: () async {
+                    setBottomBarIndex(2);
+                    try {
+                      await Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CollectionScreen(),
+                        ),
+                      );
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
+                ),
+              ],
             ),
           ),
         ],
